@@ -5,7 +5,7 @@ from scrape import (
     clean_body_content,
     split_dom_content,
 )
-from parse import parse_with_ollama
+from parse import parse_with_chatgpt
 
 # Streamlit UI
 st.title("AI Web Scraper")
@@ -28,7 +28,6 @@ if st.button("Scrape Website"):
         with st.expander("View DOM Content"):
             st.text_area("DOM Content", cleaned_content, height=300)
 
-
 # Step 2: Ask Questions About the DOM Content
 if "dom_content" in st.session_state:
     parse_description = st.text_area("Describe what you want to parse")
@@ -37,7 +36,7 @@ if "dom_content" in st.session_state:
         if parse_description:
             st.write("Parsing the content...")
 
-            # Parse the content with Ollama
+            # Parse the content with ChatGPT
             dom_chunks = split_dom_content(st.session_state.dom_content)
-            parsed_result = parse_with_ollama(dom_chunks, parse_description)
+            parsed_result = parse_with_chatgpt(dom_chunks, parse_description)
             st.write(parsed_result)
